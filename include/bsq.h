@@ -7,8 +7,8 @@
 
 #define MSG_READ_FAIL  "read failed\n"
 #define EXIT_READ_FAIL 84
-#define MSG_EMPTY_FILE "read has nothing more to read\n"
-#define EXIT_EMPTY_FILE 84
+#define MSG_READ_EMPTY_FILE "read has nothing more to read\n"
+#define EXIT_READ_EMPTY_FILE 84
 #define MSG_READ_NOT_COMPLETE  "read didn't complete the entire buffer\n"
 #define EXIT_READ_NOT_COMPLETE 84
 #define MSG_NOT_ENOUGH_LINES  "Not enough lines\n"
@@ -20,7 +20,7 @@
 
 #define EMPTY_CHAR 'o'
 #define FULL_CHAR '.'
+#define SQUARE_CHAR 'x'
 
-void get_squares(char *buffer);
-int *get_square_tab(char *buffer, int y);
+int get_squares(char *buffer);
 bool is_split_char(char const c);

@@ -5,7 +5,8 @@
 ## project makefile
 ##
 
-SRC =   src/algorithms.c
+SRC =   src/main.c	\
+		src/square.c
 
 OBJ =   $(SRC:.c=.o)
 
