@@ -1,0 +1,11 @@
+*.o
+a.out
+*~
+libmy.a
+bsq
+*.gcda
+*.gcno
+vgcore.*
+test.c
+test
+*.sublime-*
