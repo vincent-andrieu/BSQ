@@ -41,19 +41,30 @@ static int check_errors(int value, char *buffer, int size)
     return 0;
 }
 
-int main(int argc, char **argv)
+static int bsq_main(filepath)
 {
     struct stat st;
-    stat(argv[1], &st);
-    int fd = open(argv[1], O_RDONLY);
+    stat(filepath, &st);
+    int fd = open(filepath, O_RDONLY);
     char buffer[st.st_size];
     int size = read(fd, buffer, st.st_size);
 
     close(fd);
     if (check_errors(size, buffer, st.st_size) != 0)
         return check_errors(size, buffer, st.st_size);
+    buffer[st.st_size] = '\0';
     if (get_squares(buffer) != 0) {
         my_putstr(MSG_ERROR);
         return EXIT_ERROR;
     }
+    return 0;
+}
+
+int main(int argc, char **argv)
+{
+    if (argc < 1) {
+        my_put_error_str(MSG_NOT_ENOUGH_ARGS);
+        return EXIT_NOT_ENOUGH_ARGS;
+    }
+    return bsq_main(argv[1]);
 }
