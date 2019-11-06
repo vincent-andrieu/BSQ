@@ -11,6 +11,7 @@
 #define MY_H
 
 void my_putchar(char c);
+int my_put_error_str(char *str);
 int my_isneg(int nb);
 int my_put_nbr(int nb);
 char *my_nbr_get_str(int nb);

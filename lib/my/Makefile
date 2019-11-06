@@ -41,7 +41,8 @@ SRC	=	my_compute_power_rec.c	\
 		my_swap.c	\
 		convert_base.c	\
 		my_str_to_array.c	\
-		my_str_malloc.c
+		my_str_malloc.c	\
+		my_put_error_str.c
 
 OBJ	=	$(SRC:.c=.o)
 
