@@ -9,3 +9,5 @@ vgcore.*
 test.c
 test
 *.sublime-*
+mouli_maps/
+mouli_maps_solved/
