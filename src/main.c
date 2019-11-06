@@ -12,9 +12,9 @@
 #include "my.h"
 #include "bsq.h"
 
-bool is_split_char(char const c)
+bool is_split_char(char c)
 {
-    if (c == '\n' || c == '\0')
+    if (c == '\n')
         return true;
     return false;
 }
@@ -41,7 +41,7 @@ static int check_errors(int value, char *buffer, int size)
     return 0;
 }
 
-static int bsq_main(filepath)
+static int bsq_main(char *filepath)
 {
     struct stat st;
     stat(filepath, &st);
@@ -62,7 +62,7 @@ static int bsq_main(filepath)
 
 int main(int argc, char **argv)
 {
-    if (argc < 1) {
+    if (argc < 2) {
         my_put_error_str(MSG_NOT_ENOUGH_ARGS);
         return EXIT_NOT_ENOUGH_ARGS;
     }
