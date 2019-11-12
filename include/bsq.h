@@ -7,7 +7,7 @@
 
 #define MSG_NOT_ENOUGH_ARGS  "Not enough arguments\n"
 #define EXIT_NOT_ENOUGH_ARGS 84
-#define MSG_READ_FAIL  "read failed\n"
+#define MSG_READ_FAIL  "Read failed\n"
 #define EXIT_READ_FAIL 84
 #define MSG_READ_EMPTY_FILE "read has nothing more to read\n"
 #define EXIT_READ_EMPTY_FILE 84

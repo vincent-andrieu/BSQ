@@ -48,10 +48,11 @@ static int bsq_main(char *filepath)
     int fd = open(filepath, O_RDONLY);
     char buffer[st.st_size];
     int size = read(fd, buffer, st.st_size);
+    int error = check_errors(size, buffer, st.st_size);
 
     close(fd);
-    if (check_errors(size, buffer, st.st_size) != 0)
-        return check_errors(size, buffer, st.st_size);
+    if (error != 0)
+        return error;
     buffer[st.st_size] = '\0';
     if (get_squares(buffer) != 0) {
         my_putstr(MSG_ERROR);
