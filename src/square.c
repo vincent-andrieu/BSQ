@@ -18,16 +18,17 @@ static int get_columns(char *buffer, int i, int n)
             return -1;
         }
     if (n < 1)
-        get_columns(buffer, i, ++n);
+        return get_columns(buffer, i + 1, ++n);
     return i;
 }
 
-static int get_square_size(char **tab, int x, int y, int n)
+static int get_square_size(char **tab, int y, int x, int n)
 {
-    for (int i = 0; i < n && i < n; i++)
-        if (tab[x + i][y] != FULL_CHAR || tab[x][y + i] != FULL_CHAR)
+    for (int i = 0; i < n; i++)
+        if (tab[y][x + i] == '\0' || tab[y + i] == NULL
+         || tab[y][x + i] != FULL_CHAR || tab[y + i][x] != FULL_CHAR)
             return n;
-    return get_square_size(tab, x, y, ++n);
+    return get_square_size(tab, y, x, ++n);
 }
 
 static void put_bigest_square(char **tab, int n, int x, int y)
@@ -35,8 +36,10 @@ static void put_bigest_square(char **tab, int n, int x, int y)
     for (int i = x; i < x + n; i++)
         for (int j = y; j < y + n; j++)
             tab[x][y] = SQUARE_CHAR;
-    for (int i = 0; tab[i] != NULL; i++)
+    for (int i = 0; tab[i] != NULL; i++) {
         my_putstr(tab[i]);
+        my_putchar('\n');
+    }
 }
 
 static void get_bigest_square(char **tab, int **squares)
@@ -45,7 +48,7 @@ static void get_bigest_square(char **tab, int **squares)
     int x = 0;
     int y = 0;
 
-    for (int i = 0; squares[i] != NULL; i++)
+    for (int i = 1; squares[i] != NULL; i++)
         for (int j = 0; squares[i][j] != -1; j++) {
             x = squares[i][j] > record ? i : x;
             y = squares[i][j] > record ? j : y;
@@ -56,21 +59,31 @@ static void get_bigest_square(char **tab, int **squares)
 int get_squares(char *buffer)
 {
     char **tab = my_str_to_array(buffer, &is_split_char, false);
-    int x = get_columns(buffer, 0, 0);
+    int x = get_columns(buffer, 0, 0) - my_strlen(tab[0]) - 1;
     int y = my_getnbr(tab[0]);
-    int squares[x > 0 ? x + 1 : 1][y];
+    int **squares = malloc(sizeof(int *) * (y + 2));
 
-    if (tab == NULL)
+    if (tab == NULL || squares == NULL)
         return EXIT_ERROR;
     if (x <= 0)
         return EXIT_NOT_ENOUGH_LINES;
-    for (int i = 0; i <= x; i++)
-        for (int j = 0; j < y; j++)
-            squares[i][j] = i == x ? -1 : 0;
-    for (int i = 0; tab[i] != NULL; i++)
-        for (int k = 0; tab[i][k] != '\0'; k++) {
+    for (int i = 0; i <= y; i++) {
+        squares[i] = malloc(sizeof(int) * (x + 1));
+        if (squares[i] == NULL)
+            return EXIT_ERROR;
+    }
+    squares[y + 1] = NULL;
+    for (int j = 1; j <= y; j++)
+        squares[j][x] = -1;
+    for (int i = 1; tab[i] != NULL; i++)
+        for (int k = 0; tab[i][k] != '\0'; k++)
             squares[i][k] = get_square_size(tab, i, k, 0);
-        }
     get_bigest_square(tab, squares);
+    for (int i = 0; tab[i] != NULL; i++) {
+        free(tab[i]);
+        free(squares[i]);
+    }
+    free(tab);
+    free(squares);
     return 0;
 }
