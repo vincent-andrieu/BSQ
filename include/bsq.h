@@ -24,5 +24,4 @@
 #define FULL_CHAR '.'
 #define SQUARE_CHAR 'x'
 
-int get_squares(char *buffer);
-bool is_split_char(char const c);
+int get_squares(char *buffer, char **tab);

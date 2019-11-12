@@ -57,9 +57,8 @@ static void get_bigest_square(char **tab, int **squares)
     put_bigest_square(tab, squares[x][y], x, y);
 }
 
-int get_squares(char *buffer)
+int get_squares(char *buffer, char **tab)
 {
-    char **tab = my_str_to_array(buffer, &is_split_char, false);
     int x = get_columns(buffer, 0, 0) - my_strlen(tab[0]) - 1;
     int y = my_getnbr(tab[0]);
     int **squares = malloc(sizeof(int *) * (y + 2));
