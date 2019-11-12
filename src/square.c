@@ -24,7 +24,7 @@ static int get_columns(char *buffer, int i, int n)
 
 static int get_square_size(char **tab, int y, int x, int n)
 {
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i <= n; i++)
         if (tab[y + n] == NULL || tab[y + n][x + i] == '\0'
          || tab[y + n][x + i] != FULL_CHAR || tab[y + i][x + n] != FULL_CHAR)
             return n;
