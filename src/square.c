@@ -25,8 +25,8 @@ static int get_columns(char *buffer, int i, int n)
 static int get_square_size(char **tab, int y, int x, int n)
 {
     for (int i = 0; i < n; i++)
-        if (tab[y][x + i] == '\0' || tab[y + i] == NULL
-         || tab[y][x + i] != FULL_CHAR || tab[y + i][x] != FULL_CHAR)
+        if (tab[y + n] == NULL || tab[y + n][x + i] == '\0'
+         || tab[y + n][x + i] != FULL_CHAR || tab[y + i][x + n] != FULL_CHAR)
             return n;
     return get_square_size(tab, y, x, ++n);
 }
@@ -35,8 +35,8 @@ static void put_bigest_square(char **tab, int n, int x, int y)
 {
     for (int i = x; i < x + n; i++)
         for (int j = y; j < y + n; j++)
-            tab[x][y] = SQUARE_CHAR;
-    for (int i = 0; tab[i] != NULL; i++) {
+            tab[i][j] = SQUARE_CHAR;
+    for (int i = 1; tab[i] != NULL; i++) {
         my_putstr(tab[i]);
         my_putchar('\n');
     }
@@ -52,6 +52,7 @@ static void get_bigest_square(char **tab, int **squares)
         for (int j = 0; squares[i][j] != -1; j++) {
             x = squares[i][j] > record ? i : x;
             y = squares[i][j] > record ? j : y;
+            record = squares[i][j] > record ? squares[i][j] : record;
         }
     put_bigest_square(tab, squares[x][y], x, y);
 }
