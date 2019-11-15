@@ -45,8 +45,8 @@ static char **get_tab(char *buffer)
     for (; buffer[i] != '\n' && buffer[i] != '\0'; i++);
     lines = my_strndup(buffer, i);
     y = my_getnbr(lines);
-    tab = malloc(sizeof(char *) * (y == NULL ? 0 : (y + 2)));
-    if (tab == NULL || lines == NULL)
+    tab = malloc(sizeof(char *) * (y + 2));
+    if (tab == NULL || lines == NULL || y <= 0)
         return NULL;
     tab[0] = lines;
     tab[y + 1] = NULL;
@@ -59,24 +59,33 @@ static char **get_tab(char *buffer)
     return tab;
 }
 
-static int bsq_main(char *filepath)
+static off_t get_filesize(char *filepath)
 {
     struct stat st;
     stat(filepath, &st);
+
+    return st.st_size;
+}
+
+static int bsq_main(char *filepath)
+{
     int fd = open(filepath, O_RDONLY);
-    char buffer[st.st_size];
-    int size = read(fd, buffer, st.st_size);
-    int error = check_errors(size, buffer, st.st_size);
+    char *buffer = malloc(sizeof(char) * get_filesize(filepath));
+    int size = read(fd, buffer, get_filesize(filepath));
+    int error;
 
     close(fd);
-    if (error != 0)
-        return error;
-    buffer[st.st_size] = '\0';
-    if (get_squares(buffer, get_tab(buffer)) != 0) {
+    if (buffer == NULL) {
         my_putstr(MSG_ERROR);
         return EXIT_ERROR;
     }
-    return 0;
+    error = check_errors(size, buffer, get_filesize(filepath));
+    if (error == 0 && get_squares(buffer, get_tab(buffer)) != 0) {
+        my_putstr(MSG_ERROR);
+        error = EXIT_ERROR;
+    }
+    free(buffer);
+    return error;
 }
 
 int main(int argc, char **argv)

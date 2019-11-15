@@ -5,6 +5,8 @@
 ** print int from string
 */
 
+#include <stdlib.h>
+
 int my_strlen(char const *str);
 
 static int get_num(char *list, char option)
@@ -75,6 +77,8 @@ int my_getnbr(char const *str)
     int num;
     int max_v = 1000000000;
 
+    if (str == NULL)
+        return 0;
     prepare_list(str, list);
     neg = is_neg(str);
     if (get_num(list, 'n') > 10)
