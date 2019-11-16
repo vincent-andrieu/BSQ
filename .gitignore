@@ -11,3 +11,5 @@ test
 *.sublime-*
 mouli_maps/
 mouli_maps_solved/
+unit_tests
+bootstrap/
