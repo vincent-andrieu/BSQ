@@ -22,10 +22,6 @@ static int check_errors(int value, char *buffer)
             my_putstr(MSG_FIRST_LINE_NOT_NUMBER);
             return EXIT_FIRST_LINE_NOT_NUMBER;
         }
-    if (buffer[i] == '\0') {
-        my_putstr(MSG_INVALID_NBR_LINES);
-        return EXIT_INVALID_NBR_LINES;
-    }
     if (value < 0) {
         my_putstr(MSG_READ_FAIL);
         return EXIT_READ_FAIL;
@@ -33,6 +29,10 @@ static int check_errors(int value, char *buffer)
     if (value == 0) {
         my_putstr(MSG_READ_EMPTY_FILE);
         return EXIT_READ_EMPTY_FILE;
+    }
+    if (buffer[i] == '\0') {
+        my_putstr(MSG_INVALID_NBR_LINES);
+        return EXIT_INVALID_NBR_LINES;
     }
     return 0;
 }

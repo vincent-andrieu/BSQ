@@ -48,3 +48,10 @@ Test(bsq, test_outputs_read_failure) {
     bsq_main("");
     cr_assert_stdout_eq_str("Read failed\n");
 }
+
+Test(bsq, test_outputs_invalid_number_lines) {
+    cr_redirect_stdout();
+    
+    bsq_main("maps/tests_maps/map_invalid_nbr_lines");
+    cr_assert_stdout_eq_str("Invalid number of lines\n");
+}
