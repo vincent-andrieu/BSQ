@@ -19,19 +19,19 @@ static int check_errors(int value, char *buffer)
 
     for (; buffer[i] != '\0' && buffer[i] != '\n'; i++)
         if (buffer[i] < '0' || buffer[i] > '9') {
-            my_putstr(MSG_FIRST_LINE_NOT_NUMBER);
+            my_put_error_str(MSG_FIRST_LINE_NOT_NUMBER);
             return EXIT_FIRST_LINE_NOT_NUMBER;
         }
     if (value < 0) {
-        my_putstr(MSG_READ_FAIL);
+        my_put_error_str(MSG_READ_FAIL);
         return EXIT_READ_FAIL;
     }
     if (value == 0) {
-        my_putstr(MSG_READ_EMPTY_FILE);
+        my_put_error_str(MSG_READ_EMPTY_FILE);
         return EXIT_READ_EMPTY_FILE;
     }
     if (buffer[i] == '\0') {
-        my_putstr(MSG_INVALID_NBR_LINES);
+        my_put_error_str(MSG_INVALID_NBR_LINES);
         return EXIT_INVALID_NBR_LINES;
     }
     return 0;
@@ -78,12 +78,14 @@ static int check_nbr_lines(char *buffer)
 
     for (; buffer[i] != '\n'; i++);
     nbr_c = my_strndup(buffer, i);
+    if (nbr_c == NULL)
+        return EXIT_ERROR;
     lines = my_getnbr(nbr_c);
     for (i++; buffer[i] != '\0'; i++)
         if (buffer[i] == '\n')
             n++;
     if (n != lines) {
-        my_putstr(MSG_INVALID_NBR_LINES);
+        my_put_error_str(MSG_INVALID_NBR_LINES);
         return EXIT_INVALID_NBR_LINES;
     }
     free(nbr_c);
@@ -99,14 +101,14 @@ int bsq_main(char *filepath)
 
     close(fd);
     if (buffer == NULL) {
-        my_putstr(MSG_ERROR);
+        my_put_error_str(MSG_ERROR);
         return EXIT_ERROR;
     }
     error = check_errors(size, buffer);
     if (error == 0)
         error = check_nbr_lines(buffer);
     if (error == 0 && get_squares(buffer, get_tab(buffer)) != 0) {
-        my_putstr(MSG_ERROR);
+        my_put_error_str(MSG_ERROR);
         error = EXIT_ERROR;
     }
     free(buffer);
