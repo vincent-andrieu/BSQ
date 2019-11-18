@@ -15,11 +15,17 @@
 
 static int check_errors(int value, char *buffer)
 {
-    for (int i = 0; buffer[i] != '\0' && buffer[i] != '\n'; i++)
+    int i = 0;
+
+    for (; buffer[i] != '\0' && buffer[i] != '\n'; i++)
         if (buffer[i] < '0' || buffer[i] > '9') {
             my_putstr(MSG_FIRST_LINE_NOT_NUMBER);
             return EXIT_FIRST_LINE_NOT_NUMBER;
         }
+    if (buffer[i] == '\0') {
+        my_putstr(MSG_INVALID_NBR_LINES);
+        return EXIT_INVALID_NBR_LINES;
+    }
     if (value < 0) {
         my_putstr(MSG_READ_FAIL);
         return EXIT_READ_FAIL;
@@ -63,6 +69,27 @@ static off_t get_filesize(char *filepath)
     return st.st_size;
 }
 
+static int check_nbr_lines(char *buffer)
+{
+    int i = 0;
+    int n = 0;
+    int lines = 0;
+    char *nbr_c;
+
+    for (; buffer[i] != '\n'; i++);
+    nbr_c = my_strndup(buffer, i);
+    lines = my_getnbr(nbr_c);
+    for (i++; buffer[i] != '\0'; i++)
+        if (buffer[i] == '\n')
+            n++;
+    if (n != lines) {
+        my_putstr(MSG_INVALID_NBR_LINES);
+        return EXIT_INVALID_NBR_LINES;
+    }
+    free(nbr_c);
+    return 0;
+}
+
 int bsq_main(char *filepath)
 {
     int fd = open(filepath, O_RDONLY);
@@ -76,6 +103,8 @@ int bsq_main(char *filepath)
         return EXIT_ERROR;
     }
     error = check_errors(size, buffer);
+    if (error == 0)
+        error = check_nbr_lines(buffer);
     if (error == 0 && get_squares(buffer, get_tab(buffer)) != 0) {
         my_putstr(MSG_ERROR);
         error = EXIT_ERROR;
