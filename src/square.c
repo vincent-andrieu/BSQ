@@ -36,7 +36,7 @@ static void put_bigest_square(char *buffer, int *values, int len)
     free(lines);
 }
 
-static void free_tabs(char **tab)
+static void free_tab(char **tab)
 {
     for (int i = 0; tab[i] != NULL; i++)
         free(tab[i]);
@@ -58,6 +58,6 @@ int get_squares(char *buffer, char **tab)
             values[0] = score > values[0] ? score : values[0];
         }
     put_bigest_square(buffer, values, my_strlen(tab[1]));
-    free_tabs(tab);
+    free_tab(tab);
     return 0;
 }
