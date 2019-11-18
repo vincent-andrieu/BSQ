@@ -9,10 +9,8 @@
 #define EXIT_NOT_ENOUGH_ARGS 84
 #define MSG_READ_FAIL  "Read failed\n"
 #define EXIT_READ_FAIL 84
-#define MSG_READ_EMPTY_FILE "read has nothing more to read\n"
+#define MSG_READ_EMPTY_FILE "Empty file\n"
 #define EXIT_READ_EMPTY_FILE 84
-#define MSG_READ_NOT_COMPLETE  "read didn't complete the entire buffer\n"
-#define EXIT_READ_NOT_COMPLETE 84
 #define MSG_NOT_ENOUGH_LINES  "Not enough lines\n"
 #define EXIT_NOT_ENOUGH_LINES 84
 #define MSG_FIRST_LINE_NOT_NUMBER "First line isn't a number\n"
@@ -25,3 +23,4 @@
 #define SQUARE_CHAR 'x'
 
 int get_squares(char *buffer, char **tab);
+int bsq_main(char *filepath);
