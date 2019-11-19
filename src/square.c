@@ -15,7 +15,7 @@ static int get_square_size(char **tab, int y, int x, int n)
 {
     for (int i = 0; i <= n; i++)
         if (tab[y + n] == NULL || tab[y + n][x + i] == '\0'
-            || tab[y + n][x + i] != FULL_CHAR || tab[y + i][x + n] != FULL_CHAR)
+        || tab[y + n][x + i] != FULL_CHAR || tab[y + i][x + n] != FULL_CHAR)
             return n;
     return get_square_size(tab, y, x, ++n);
 }
@@ -30,7 +30,7 @@ static void put_bigest_square(char *buffer, int *values, int len)
     buffer += i + 1;
     for (int k = 0; k < values[0]; k++)
         for (i = (values[2] - 1 + k) * (len + 1) + values[1];
-            i < (values[2] - 1 + k) * (len + 1) + values[1] + values[0]; i++)
+        i < (values[2] - 1 + k) * (len + 1) + values[1] + values[0]; i++)
             buffer[i] = SQUARE_CHAR;
     write(1, buffer, my_getnbr(lines) * (len + 1));
     free(lines);

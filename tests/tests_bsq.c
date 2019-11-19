@@ -15,7 +15,8 @@
 Test(bsq_1, test_outputs) {
     cr_redirect_stdout();
     
-    char *filepath = "maps/tests_maps_solved/intermediate_map_34_137_with_obstacles_25pc";
+    char *filepath = "maps/tests_maps_solved/intermediate_"
+    "map_34_137_with_obstacles_25pc";
     struct stat st;
     stat(filepath, &st);
     int fd = open(filepath, O_RDONLY);
