@@ -56,3 +56,10 @@ Test(bsq, test_outputs_invalid_number_lines) {
     bsq_main("maps/tests_maps/map_invalid_nbr_lines");
     cr_assert_stderr_eq_str("Invalid number of lines\n");
 }
+
+Test(bsq, test_outputs_invalid_line_size) {
+    cr_redirect_stderr();
+    
+    bsq_main("maps/tests_maps/map_invalid_line_size");
+    cr_assert_stderr_eq_str("ERROR\n");
+}
