@@ -47,16 +47,20 @@ int get_squares(char *buffer, char **tab)
 {
     int score;
     int values[3] = {0, 0, 0};
+    int def_len = my_strlen(tab[1]);
 
     if (tab == NULL)
         return EXIT_ERROR;
-    for (int i = 1; tab[i] != NULL; i++)
+    for (int i = 1; tab[i] != NULL; i++) {
+        if (my_strlen(tab[i]) != def_len)
+            return EXIT_ERROR;
         for (int k = 0; tab[i][k] != '\0'; k++) {
             score = get_square_size(tab, i, k, 0);
             values[1] = score > values[0] ? k : values[1];
             values[2] = score > values[0] ? i : values[2];
             values[0] = score > values[0] ? score : values[0];
         }
+    }
     put_bigest_square(buffer, values, my_strlen(tab[1]));
     free_tab(tab);
     return 0;
