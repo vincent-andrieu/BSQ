@@ -30,10 +30,6 @@ static int check_errors(int value, char *buffer)
         my_put_error_str(MSG_READ_EMPTY_FILE);
         return EXIT_READ_EMPTY_FILE;
     }
-    if (buffer[i] == '\0') {
-        my_put_error_str(MSG_INVALID_NBR_LINES);
-        return EXIT_INVALID_NBR_LINES;
-    }
     return 0;
 }
 
@@ -85,6 +81,7 @@ static int check_nbr_lines(char *buffer)
         if (buffer[i] == '\n')
             n++;
     if (n != lines) {
+        free(nbr_c);
         my_put_error_str(MSG_INVALID_NBR_LINES);
         return EXIT_INVALID_NBR_LINES;
     }
@@ -95,7 +92,7 @@ static int check_nbr_lines(char *buffer)
 int bsq_main(char *filepath)
 {
     int fd = open(filepath, O_RDONLY);
-    char *buffer = malloc(sizeof(char) * get_filesize(filepath));
+    char *buffer = malloc(sizeof(char) * (get_filesize(filepath) + 1));
     int size = read(fd, buffer, get_filesize(filepath));
     int error;
 
@@ -104,6 +101,7 @@ int bsq_main(char *filepath)
         my_put_error_str(MSG_ERROR);
         return EXIT_ERROR;
     }
+    buffer[get_filesize(filepath)] = '\0';
     error = check_errors(size, buffer);
     if (error == 0)
         error = check_nbr_lines(buffer);
