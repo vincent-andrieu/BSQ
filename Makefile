@@ -26,6 +26,7 @@ $(NAME):    $(OBJ)
 
 tests_run:
 	$(TEST)
+	./unit_tests
 
 clean:
 	@make clean -C lib/my/ --no-print-directory
