@@ -25,6 +25,7 @@ $(NAME):    $(OBJ)
 	gcc -o $(NAME) $(OBJ) $(LDFLAGS)
 
 tests_run:
+	make -C lib/my/
 	$(TEST)
 	./unit_tests
 
