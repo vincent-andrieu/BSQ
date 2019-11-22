@@ -93,7 +93,7 @@ int bsq_main(char *filepath)
 {
     int fd = open(filepath, O_RDONLY);
     char *buffer = malloc(sizeof(char) * (get_filesize(filepath) + 1));
-    int size = read(fd, buffer, get_filesize(filepath));
+    int size = buffer != NULL ? read(fd, buffer, get_filesize(filepath)) : -1;
     int error;
 
     close(fd);
