@@ -17,6 +17,7 @@
 #define EXIT_FIRST_LINE_NOT_NUMBER 84
 #define MSG_ERROR "ERROR\n"
 #define EXIT_ERROR 84
+#define EXIT_SUCCESS 0
 
 #define EMPTY_CHAR 'o'
 #define FULL_CHAR '.'
